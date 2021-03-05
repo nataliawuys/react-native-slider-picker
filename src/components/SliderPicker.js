@@ -127,7 +127,7 @@ export class SliderPicker extends Component {
     this.maxValue = this.props.maxValue ? this.props.maxValue : 10;
     this.slideBeginCallback = this.props.slideBeginCallback ? this.props.slideBeginCallback : () => {};
     this.errorToleranceMargin = this.props.errorToleranceMargin ? this.props.errorToleranceMargin : 50;
-
+    this.step=this.props.step?this.props.step:1
     // Make sure that value of errorToleranceMargin is a Number greater than 0
     if (isNaN(this.errorToleranceMargin) || this.errorToleranceMargin < 0) {
       this.errorToleranceMargin = null;
@@ -157,14 +157,14 @@ export class SliderPicker extends Component {
     this.labelFontSize = this.props.labelFontSize ? this.props.labelFontSize : 28;
     this.labelFontWeight = this.props.labelFontWeight ? this.props.labelFontWeight : 'normal';
     this.scaleNumberFontColor = this.props.scaleNumberFontColor ? this.props.scaleNumberFontColor : 'dimgrey';
-    this.scaleNumberFontSize = this.props.scaleNumberFontSize ? this.props.scaleNumberFontSize : 24;
+    this.scaleNumberFontSize = this.props.scaleNumberFontSize ? this.props.scaleNumberFontSize : 20;
     this.scaleNumberFontWeight = this.props.scaleNumberFontWeight ? this.props.scaleNumberFontWeight : 'normal';
     this.sliderInnerBackgroundColor = this.props.sliderInnerBackgroundColor ? this.props.sliderInnerBackgroundColor : 'white';
     this.sliderInnerBorderStyles = this.props.sliderInnerBorderStyles ? this.props.sliderInnerBorderStyles : this.defaultSliderInnerBorderStyles;
 
     // If maxValue is greater than 10 or if slider will take up less than 50% of
     // viewport width, force scale-related values to false.
-    if (this.maxValue > 10 || this.widthPercentage <= 50) {
+    if (this.maxValue > 150 || this.widthPercentage <= 50) {
       this.showNumberScale = false;
       this.showSeparatorScale = false;
     }
@@ -282,11 +282,11 @@ export class SliderPicker extends Component {
       >
   
         { /* Labels */ }
-        <View style={this.labelsContainerStyles}>
+        {/* <View style={this.labelsContainerStyles}>
           {this.minLabel}
           {this.midLabel}
           {this.maxLabel}
-        </View>
+        </View> */}
   
         {/* Slider itself */}
         <View style={[sliderInnerStyles, this.sliderInnerBorderStyles]}>
@@ -556,7 +556,7 @@ export class SliderPicker extends Component {
 
     // For 0 through this.maxValue, push a styled separator into separators array via helper
     // method, this.separatorGenerator(). Will be rendered in JSX below.
-    for (let i = 0; i <= this.maxValue; i++) {
+    for (let i = 0; i <= this.maxValue; i+=this.step) {
       separators.push(this.separatorGenerator(i));
     }
 
@@ -599,11 +599,11 @@ export class SliderPicker extends Component {
 
     // For 0 through this.maxValue, push a styled button into numbers. 
     // Will be rendered in JSX below.
-    for (let i = 0; i <= this.maxValue; i++) {
+    for (let i = 0; i <= this.maxValue; i+=this.step) {
 
       // Initialize width variable to set the width of each TouchableHighlight.
       // Default value is the rounded down - numbersContainers width divided by this.maxValue - 0 (number of options).
-      let width = Math.floor(vw(this.widthPercentage) / (this.maxValue));
+      let width = Math.floor(vw(this.widthPercentage) / (this.maxValue/this.step));
       
       // If first TouchableHighlight, add extra width to account for the width of separatorLine.
       width = i === 0 ? width + ((vw(1) / 3) * 2) : width;
