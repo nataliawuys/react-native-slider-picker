@@ -47,6 +47,8 @@ export class SliderPickerCursor extends Component {
     // Set buttonWidth to width passed for dimensions by default
     this.buttonWidth = vw(this.buttonDimensionsPercentage);
 
+    this.step=this.props.step
+    
     // If button styles have been override and the override styles have a width property
     if ( this.buttonStylesOverride && Object.keys(this.buttonStylesOverride).includes('width') ) {
       // Set buttonWidth to the value passed in styles override.
@@ -62,7 +64,7 @@ export class SliderPickerCursor extends Component {
     this.offsetsMap = [];
 
     // Get x-axis positioning of each number/separator
-    for (let i = 0; i <= this.maxValue; i++) {
+    for (let i = 0; i <= this.maxValue; i=i+this.step) {
       this.offsetsMap.push({
         offset: this.maxOffset * (i / this.maxValue),
         value: i
@@ -279,7 +281,7 @@ export class SliderPickerCursor extends Component {
     this.state.drag.setValue({ x: updatedOffsetX, y: 0 });
 
     // Update latestPosition
-    this.setState({ latestPosition: newPosition });
+    this.setState({ latestPosition: newPosition});
 
     // Flatten offset on release to prevent bug on repeated drags
     this.state.drag.flattenOffset();
