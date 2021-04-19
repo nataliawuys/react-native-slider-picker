@@ -307,6 +307,7 @@ export class SliderPicker extends Component {
             buttonDimensionsPercentage={this.buttonDimensionsPercentage}
             buttonStylesOverride={this.buttonStylesOverride}
             maxValue={this.maxValue}
+            step={this.step}
             slideBeginCallback={() => this.slideBeginCallback()}
             errorToleranceMargin={this.errorToleranceMargin}
           />
@@ -508,8 +509,11 @@ export class SliderPicker extends Component {
    * @return {Function} Executes props.callback and state updaters for both currentValue and triggerNonDraggablePress.
    */
   handleChildRelease = (value) => {
+
+    let stepVal=Math.floor(value/this.step)*this.step
+ 
     this.setState({
-      currentValue: value,
+      currentValue: stepVal,
       triggerNonDraggablePress: false
     }, () => this.callback(value));
   }
