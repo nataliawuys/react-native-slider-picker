@@ -199,11 +199,12 @@ export class SliderPickerCursor extends Component {
    * @return {Number} offset value to be set in constructors set in x key of this.state.drag.setValue()
    */
   getOffsetPosition = (value) => {
+    // console.log("default", value)
     let nearest = this.offsetsMap.filter(obj => {
       return obj.value === value;
     });
 
-    return nearest[0].offset;
+    return nearest.length>0?nearest[0].offset:(this.defaultValue/this.maxValue)*this.maxOffset;
   }
 
   /** 
