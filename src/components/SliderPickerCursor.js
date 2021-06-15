@@ -109,7 +109,9 @@ export class SliderPickerCursor extends Component {
    * Render
    */
   render() {
-
+    if(this.props.show == false) {
+      return null;
+    }
     //
     // Set dynamic styles based on props
     //
@@ -147,7 +149,20 @@ export class SliderPickerCursor extends Component {
       this.nonDraggablePressHandler(this.props.nonDraggablePressLocation);
     }
   }
-  
+
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   var newDrag = new Animated.ValueXY();
+  //   newDrag.setValue({ 
+  //     x: (nextProps.value/nextProps.maxValue)* nextProps.maxOffset
+  //       - (nextProps.buttonWidth * .5),
+  //     y: 0 
+  //   });
+  //   return {
+  //     ...prevState,
+  //     drag: newDrag
+  //   }
+  // }
+
   /** 
    * Event handler for when panResponder gesture has started. Sets x offset and x/y value of drag panResponder instance.
    * @return {Function} Executes this.state.drag.setOffset and this.state.drag.setValue.
@@ -204,7 +219,11 @@ export class SliderPickerCursor extends Component {
       return obj.value === value;
     });
 
-    return nearest.length>0?nearest[0].offset:(this.defaultValue/this.maxValue)*this.maxOffset;
+    return nearest.length>0 ? nearest[0].offset : (value/this.maxValue)*this.maxOffset;
+  }
+
+  static computeOffsetPosition(value, maxValue, maxOffset) {
+    return (value/maxValue) * maxOffset;
   }
 
   /** 
