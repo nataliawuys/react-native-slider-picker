@@ -298,6 +298,8 @@ export class SliderPicker extends Component {
           <SliderPickerCursor 
             maxOffset={vw(this.widthPercentage)}
             defaultValue={this.defaultValue}
+            show={this.props.showCursor}
+            value={this.state.currentValue}
             triggerNonDraggablePress={this.state.triggerNonDraggablePress}
             nonDraggablePressLocation={this.state.nonDraggablePressLocation}
             releaseCallback={(value) => this.handleChildRelease(value)}
@@ -334,6 +336,14 @@ export class SliderPicker extends Component {
 
     this.setState({ screenReaderEnabled });
   }
+
+  // //update current value
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   return {
+  //     ...prevState,
+  //     currentValue: nextProps.value
+  //   }
+  // }
 
   /** 
    * Handler function called on value change of TextInput component for screen reader enabled. Updates value of this.state.numericInputValue and makes sure it is not greater than 10.
